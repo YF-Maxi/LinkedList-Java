@@ -7,10 +7,11 @@ class Program
         List<String> list = new List<>();
         list.AddFromTextFile("text.txt");
 
+        // Time the sorting algorithm
         long startTime = System.nanoTime();
         list.MergeSort();
         long endTime = System.nanoTime();
-        double duration = (endTime - startTime) / 1_000_000_000.0;
+        double duration = (endTime - startTime) / 1_000_000_000.0; // Calculate duration
 
         list.WriteToFile("sorted_output.txt", 1);
 

@@ -8,7 +8,7 @@ public class List<T extends Comparable<T>>
     int listLength = 0;
     char[] bannedCharacters = { ',', '.', '(', ')', '"', ';', ':' };
 
-    public List() 
+    public List() // Constructor
     {
         head = null;
         tail = null;
@@ -142,6 +142,7 @@ public class List<T extends Comparable<T>>
 
     private Node<T> Merge(Node<T> firstHalf, Node<T> secondHalf)
     {
+        // Safety checks
         if (firstHalf == null) 
         {
             return secondHalf;
@@ -153,7 +154,8 @@ public class List<T extends Comparable<T>>
 
         Node<T> mergedList;
 
-        if (firstHalf.GetValue().compareTo(secondHalf.GetValue()) <= 0) 
+        // Compare values and merge in alphabetical order
+        if (firstHalf.GetValue().compareTo(secondHalf.GetValue()) <= 0)
         {
             mergedList = firstHalf;
             mergedList.next = Merge(firstHalf.next, secondHalf);
@@ -168,7 +170,7 @@ public class List<T extends Comparable<T>>
 
     private Node<T> StartMergeSort(Node<T> headInput)
     {
-        if (headInput == null || headInput.next == null) 
+        if (headInput == null || headInput.next == null) // Safety check
         {
             return headInput;
         }

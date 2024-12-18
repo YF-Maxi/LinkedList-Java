@@ -35,9 +35,9 @@ public class List<T extends Comparable<T>>
         listLength++;
     }
 
-    public void AddTextFromFile(String fileName) throws IOException 
+    public void AddFromTextFile(String fileName) throws IOException 
     {
-        BufferedReader inputFile = new BufferedReader(new FileReader(fileName));
+        BufferedReader inputFile = new BufferedReader(new FileReader("C:\\Users\\"+ ComputerUsername() +"\\Desktop\\" + fileName));
         String line;
 
         while ((line = inputFile.readLine()) != null) // Get one line at a time from the file
@@ -54,6 +54,7 @@ public class List<T extends Comparable<T>>
                     AddAtTail((T) word); // Assuming the list holds strings, casting to T
                 }
             }
+            stream.close();
         }
 
         inputFile.close();
@@ -87,7 +88,7 @@ public class List<T extends Comparable<T>>
         }
     }
 
-    public void MergeSort() 
+    public void MergeSort()
     {
         head = StartMergeSort(head);
     }
@@ -139,7 +140,7 @@ public class List<T extends Comparable<T>>
         return secondHalf;
     }
 
-    private Node<T> Merge(Node<T> firstHalf, Node<T> secondHalf) 
+    private Node<T> Merge(Node<T> firstHalf, Node<T> secondHalf)
     {
         if (firstHalf == null) 
         {
@@ -162,11 +163,10 @@ public class List<T extends Comparable<T>>
             mergedList = secondHalf;
             mergedList.next = Merge(firstHalf, secondHalf.next);
         }
-
         return mergedList;
     }
 
-    private Node<T> StartMergeSort(Node<T> headInput) 
+    private Node<T> StartMergeSort(Node<T> headInput)
     {
         if (headInput == null || headInput.next == null) 
         {
@@ -181,18 +181,25 @@ public class List<T extends Comparable<T>>
         return Merge(headInput, secondHalf);
     }
 
-    public void WriteToFile() throws IOException
+    public void WriteToFile(String fileName, int format) throws IOException
     {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\Max\\Desktop\\sorted_output.txt"))) 
+        String spacing = ", ";
+        if (format == 0) { spacing = ""; }
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\"+ ComputerUsername() +"\\Desktop\\" + fileName))) 
         {
             Node<T> current = head;
             while (current != null) 
             {
-                // Convert T to a String using String.valueOf()
-                writer.write(String.valueOf(current.GetValue()));
-                writer.newLine();
+                //Convert vlaue of type T to a String using
+                writer.write(String.valueOf(current.GetValue()) + spacing);
+                if (format == 0) { writer.newLine(); }
                 current = current.next;
             }
         }
+    }
+
+    private String ComputerUsername()
+    {
+        return System.getProperty("user.name");
     }
 }

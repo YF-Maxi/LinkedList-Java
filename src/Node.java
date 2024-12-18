@@ -8,7 +8,7 @@ public class Node <T>
         next = null;
     }
 
-    public Node next;
+    public Node<T> next;
 
     public T GetValue()
     {

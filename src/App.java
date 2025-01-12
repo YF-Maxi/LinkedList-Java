@@ -5,7 +5,7 @@ class Program {
     {
         int testRuns = 100;
         double totalDuration = 0;
-        String outputFileName = "sorted_output.txt";
+        String outputFilename = "sorted_output.txt";
 
         for (int i = 0; i < testRuns; i++) {
             List<String> list = new List<>();
@@ -19,8 +19,8 @@ class Program {
             double duration = (endTime - startTime) / 1_000_000_000.0; // Calculate duration
             totalDuration += duration;
 
-            list.WriteToFile(outputFileName, 1);
-            System.out.println(list.GetLength() + " sorted words written to file " + outputFileName + " on the desktop. Operation duration: " + duration + " seconds.");
+            list.WriteToFile(outputFilename, 1);
+            System.out.println(list.GetLength() + " sorted words written to file " + outputFilename + " on the desktop. Operation duration: " + duration + " seconds.");
         }
 
         double averageTime = totalDuration / testRuns;

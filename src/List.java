@@ -16,17 +16,19 @@ public class List<T extends Comparable<T>>
 
     public void AddAtTail(T input) 
     {
+        // Convert to lower case to not confuse the sorting algorith at the comparison step.
         if (input instanceof String) 
         {
             input = (T)((String) input).toLowerCase();
         }
 
-        if (head == null) 
+        // If the list is empty, create a new head and give it the input value.
+        if (head == null)
         {
             head = new Node<T>(input);
             tail = head;
         } 
-        else 
+        else // If the list isn't epty, add the value to a new node at the end of the list.
         {
             tail.next = new Node<T>(input);
             tail = tail.next;
@@ -35,9 +37,10 @@ public class List<T extends Comparable<T>>
         listLength++;
     }
 
-    public void AddFromTextFile(String fileName) throws IOException 
+    public void AddFromTextFile(String filename) throws IOException 
     {
-        BufferedReader inputFile = new BufferedReader(new FileReader("C:\\Users\\"+ ComputerUsername() +"\\Desktop\\" + fileName));
+        // Takes a filepath and opens the file with the FileReader() function
+        BufferedReader inputFile = new BufferedReader(new FileReader("C:\\Users\\"+ GetComputerUsername() +"\\Desktop\\" + filename));
         String line;
 
         while ((line = inputFile.readLine()) != null) // Get one line at a time from the file
@@ -152,7 +155,7 @@ public class List<T extends Comparable<T>>
             return firstHalf;
         }
 
-        Node<T> mergedHead = null;
+        Node<T> mergedHead = null; // Fun fact, this short line caused me the most suffering. Forgetting to set it to null at initalization caused a bunch of errors.
 
         // Compare values from both halves to merge them in the right order. CompareTo returns 0 if they are equal, and negative if firstHalf's value is smaller than secondHalf's value.
         if (firstHalf.GetValue().compareTo(secondHalf.GetValue()) <= 0) 
@@ -188,7 +191,7 @@ public class List<T extends Comparable<T>>
     {
         String spacing = ", ";
         if (format == 0) { spacing = ""; }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\"+ ComputerUsername() +"\\Desktop\\" + fileName))) 
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("C:\\Users\\"+ GetComputerUsername() +"\\Desktop\\" + fileName))) 
         {
             Node<T> current = head;
             while (current != null) 
@@ -201,7 +204,7 @@ public class List<T extends Comparable<T>>
         }
     }
 
-    private String ComputerUsername()
+    private String GetComputerUsername()
     {
         return System.getProperty("user.name");
     }

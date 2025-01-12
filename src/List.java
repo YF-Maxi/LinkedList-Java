@@ -27,14 +27,14 @@ public class List<T extends Comparable<T>>
         {
             head = new Node<T>(input);
             tail = head;
+            listLength++;
         } 
         else // If the list isn't epty, add the value to a new node at the end of the list.
         {
             tail.next = new Node<T>(input);
             tail = tail.next;
+            listLength++;
         }
-
-        listLength++;
     }
 
     public void AddFromTextFile(String filename) throws IOException 
@@ -101,6 +101,20 @@ public class List<T extends Comparable<T>>
         return listLength;
     }
 
+    public int CountLength()
+    {
+        int count = 0;
+        Node<T> current = head;
+
+        while (current != null) // Move along the lsit until the end is reached and count while doing it
+        {
+            count++;
+            current = current.next;
+        }
+
+        return count;
+    }
+
     public void Clear() 
     {
         head = null;
@@ -145,7 +159,6 @@ public class List<T extends Comparable<T>>
 
     private Node<T> Merge(Node<T> firstHalf, Node<T> secondHalf) 
     {
-        // If one half is empty, return the other (safety checks)
         if (firstHalf == null) 
         {
             return secondHalf;
@@ -155,9 +168,10 @@ public class List<T extends Comparable<T>>
             return firstHalf;
         }
 
-        Node<T> mergedHead = null; // Fun fact, this short line caused me the most suffering. Forgetting to set it to null at initalization caused a bunch of errors.
+        Node<T> mergedHead = null; // The head of the merged list
+        Node<T> mergedTail = null; // The tail of the merged lsit
 
-        // Compare values from both halves to merge them in the right order. CompareTo returns 0 if they are equal, and negative if firstHalf's value is smaller than secondHalf's value.
+        // Determine the initial mergedHead
         if (firstHalf.GetValue().compareTo(secondHalf.GetValue()) <= 0) 
         {
             mergedHead = firstHalf;
@@ -167,6 +181,34 @@ public class List<T extends Comparable<T>>
         {
             mergedHead = secondHalf;
             secondHalf = secondHalf.next;
+        }
+
+        mergedTail = mergedHead; // Start the mergedTail at mergedHead
+
+        // Merge the other nodes (rebuild "chain" of nodes)
+        while (firstHalf != null && secondHalf != null) 
+        {
+            if (firstHalf.GetValue().compareTo(secondHalf.GetValue()) <= 0) 
+            {
+                mergedTail.next = firstHalf; // Add the smaller value node to the merged list
+                firstHalf = firstHalf.next; // Move to the next node in firstHalf
+            } 
+            else 
+            {
+                mergedTail.next = secondHalf; // Add the samller value node to the merged list
+                secondHalf = secondHalf.next; // Move to the next node in secondHalf
+            }
+            mergedTail = mergedTail.next; // Advance the tail pointer
+        }
+
+        // Reconnect any remaining nodes
+        if (firstHalf != null) 
+        {
+            mergedTail.next = firstHalf;
+        } 
+        else if (secondHalf != null) 
+        {
+            mergedTail.next = secondHalf;
         }
 
         return mergedHead;

@@ -46,7 +46,7 @@ public class List<T extends Comparable<T>>
             while (stream.hasNext()) 
             {
                 String word = stream.next();
-                word = removeBannedCharacters(word); // Remove any unwanted symbols from the word
+                word = RemoveBannedCharacters(word); // Remove any unwanted symbols from the word
                 word = word.toLowerCase(); // Convert the word to lowercase
                 
                 if (!word.isEmpty()) // Add the word to the list if it is not empty
@@ -60,7 +60,7 @@ public class List<T extends Comparable<T>>
         inputFile.close();
     }
 
-    private String removeBannedCharacters(String word) 
+    private String RemoveBannedCharacters(String word) 
     {
         // Remove banned characters from the front and back of the word
         word = word.trim(); // Remove leading and trailing whitespace
@@ -140,9 +140,9 @@ public class List<T extends Comparable<T>>
         return secondHalf;
     }
 
-    private Node<T> Merge(Node<T> firstHalf, Node<T> secondHalf)
+    private Node<T> Merge(Node<T> firstHalf, Node<T> secondHalf) 
     {
-        // Safety checks
+        // If one half is empty, return the other (safety checks)
         if (firstHalf == null) 
         {
             return secondHalf;
@@ -152,20 +152,21 @@ public class List<T extends Comparable<T>>
             return firstHalf;
         }
 
-        Node<T> mergedList;
+        Node<T> mergedHead = null;
 
-        // Compare values and merge in alphabetical order
-        if (firstHalf.GetValue().compareTo(secondHalf.GetValue()) <= 0)
+        // Compare values from both halves to merge them in the right order. CompareTo returns 0 if they are equal, and negative if firstHalf's value is smaller than secondHalf's value.
+        if (firstHalf.GetValue().compareTo(secondHalf.GetValue()) <= 0) 
         {
-            mergedList = firstHalf;
-            mergedList.next = Merge(firstHalf.next, secondHalf);
+            mergedHead = firstHalf;
+            firstHalf = firstHalf.next;
         } 
         else 
         {
-            mergedList = secondHalf;
-            mergedList.next = Merge(firstHalf, secondHalf.next);
+            mergedHead = secondHalf;
+            secondHalf = secondHalf.next;
         }
-        return mergedList;
+
+        return mergedHead;
     }
 
     private Node<T> StartMergeSort(Node<T> headInput)

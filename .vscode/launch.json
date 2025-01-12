@@ -9,6 +9,13 @@
             "name": "Program",
             "request": "launch",
             "mainClass": "Program",
+            "projectName": "LinkedList-Java_9c714f28"
+        },
+        {
+            "type": "java",
+            "name": "Program",
+            "request": "launch",
+            "mainClass": "Program",
             "projectName": "LinkedList-Java_921d5143"
         },
         {

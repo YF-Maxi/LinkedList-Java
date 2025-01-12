@@ -4,7 +4,7 @@ class Program
 {
     public static void main(String[] args) throws IOException // IOException needed to be able to read from the file for some reason
     {
-        int testRuns = 1000;
+        int testRuns = 10000;
         double totalDuration = 0;
         String outputFilename = "sorted_output.txt";
         List<String> list = new List<>();
